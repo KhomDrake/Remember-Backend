@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+    web:
+        image: sophierdeveloper/remembercore-web
+        build:
+          context: .
+          dockerfile: ./web/Dockerfile
+        container_name: remembercore
+        command: ["gunicorn", "-b", "0.0.0.0:8000", "--log-level", "warning", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "settings.asgi:application"]
+        environment:
+            - PYTHONUNBUFFERED=1
+            - DEBUG=1
+            - SWAGGER_METHODS_URL=https://127.0.0.1
+            - DB_NAME=remember
+            - DB_USER=remember
+            - DB_PASSWORD=dasdsadsadsadsadsa
+            - DB_HOST=ldkjasdlksajdlask.db.dklashjldsakj.com
+            - DB_PORT=5432
+            - EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+            - EMAIL_HOST=mail.remember.com.br
+            - EMAIL_HOST_USER=noreply@remember.com.br
+            - EMAIL_HOST_PASSWORD=remember@team10
+            - DEFAULT_ACCOUNT_EMAIL=noreply@remember.com.br
+            - AWS_S3_REGION_NAME=us-east-1
+            - AWS_QUERYSTRING_EXPIRE=60
+            - AWS_ACCESS_KEY_ID=REMEMBER
+            - AWS_SECRET_ACCESS_KEY=REMEMBER
+            - AWS_STORAGE_BUCKET_NAME=remember
+            - NOTIFICATION_TOKEN=REMEMBER
+            - FIREBASE_TOKEN=REMEMBER
+        ports:
+          - "8000:8000"
+        restart: unless-stopped

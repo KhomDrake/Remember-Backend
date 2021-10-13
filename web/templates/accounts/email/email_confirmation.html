@@ -1,0 +1,6 @@
+{% autoescape off %}
+Hi <b>{{ user.username }}</b>, 
+Welcome to Remember!
+
+Please <a href="http://{{ domain }}{% url 'api.accounts.activate' uidb64=uidb64 token=token %}">click here </a> to confirm your registration.
+{% endautoescape %}
